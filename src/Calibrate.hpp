@@ -158,6 +158,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			 * \param ac Azimuth (horizontal coordinates).
 			 * \param alt Altitude (horizontal coordinates).
 			 */
+
+			void autoRef_3();
+
 			void setRef_3(double ar, double dec, double t, double ac, double alt);
 
 			/**

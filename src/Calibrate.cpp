@@ -26,6 +26,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <QCompleter>
 #include <QFileDialog>
 #include <QFile>
+#include <QDebug>
+#include <QTextStream>
+#include <QObject>
+#include <QDebug>
+#include <QString>
+#include <QTime>
+#include <QDateTime>
+#include <QMessageBox>
 #include <QInputDialog>
 #include <QException>
 #include <QRegExp>
@@ -91,6 +99,7 @@ void Calibrate::_setEVC(double ar, double dec, double t, double* EVC){
 	EVC[0] = cos(dec)*cos(ar - _k*(t-_t0));
 	EVC[1] = cos(dec)*sin(ar - _k*(t-_t0));
 	EVC[2] = sin(dec);
+	qDebug() << "LMN = ["<<EVC[0] <<"," <<EVC[1] <<"," <<EVC[2]<<"]";
 }
 
 /*
@@ -100,6 +109,8 @@ void Calibrate::_setHVC(double ac, double alt, double* HVC){
 	HVC[0] = cos(alt)*cos(ac);
 	HVC[1] = cos(alt)*sin(ac);
 	HVC[2] = sin(alt);
+	qDebug() << "altac = ["<<alt <<"," <<ac<<"]";
+	qDebug() << "clmn=["<<HVC[0] <<"," <<HVC[1] <<"," <<HVC[2]<<"]";
 }
 
 /*
@@ -157,6 +168,35 @@ bool Calibrate::isConfigured(){
 	return (_isSetR1 && _isSetR2 && _isSetR3);
 }
 
+/*
+ * Third reference object calculated from the cross product of the two first ones.
+ * Then calls the function that calculates T and iT.
+ */
+void Calibrate::autoRef_3(){
+	float sqrt1, sqrt2;
+
+	if(_isSetR1 && _isSetR2){
+		sqrt1 = (1/(  sqrt( pow(( (_lmn1[1]*_lmn2[2]) - (_lmn1[2]*_lmn2[1])),2) +
+							pow(( (_lmn1[2]*_lmn2[0]) - (_lmn1[0]*_lmn2[2])),2) +
+							pow(( (_lmn1[0]*_lmn2[1]) - (_lmn1[1]*_lmn2[0])),2))
+				));
+		_lmn3[0] = sqrt1 * ( (_lmn1[1]*_lmn2[2]) - (_lmn1[2]*_lmn2[1]) );
+		_lmn3[1] = sqrt1 * ( (_lmn1[2]*_lmn2[0]) - (_lmn1[0]*_lmn2[2]) );
+		_lmn3[2] = sqrt1 * ( (_lmn1[0]*_lmn2[1]) - (_lmn1[1]*_lmn2[0]) );
+
+		sqrt2 = (1/(  sqrt( pow(( (_LMN1[1]*_LMN2[2]) - (_LMN1[2]*_LMN2[1])),2) +
+							pow(( (_LMN1[2]*_LMN2[0]) - (_LMN1[0]*_LMN2[2])),2) +
+							pow(( (_LMN1[0]*_LMN2[1]) - (_LMN1[1]*_LMN2[0])),2))
+				));
+		_LMN3[0] = sqrt2 * ( (_LMN1[1]*_LMN2[2]) - (_LMN1[2]*_LMN2[1]) );
+		_LMN3[1] = sqrt2 * ( (_LMN1[2]*_LMN2[0]) - (_LMN1[0]*_LMN2[2]) );
+		_LMN3[2] = sqrt2 * ( (_LMN1[0]*_LMN2[1]) - (_LMN1[1]*_LMN2[0]) );
+		_isSetR3 = true;
+
+		if(_isSetR1 && _isSetR2 && _isSetR3)
+			_setT();
+	}
+}
 
 /*
  *	Sets the transformation matrix and its inverse (T and iT, respectively).
@@ -175,14 +215,11 @@ void Calibrate::_setT(){
 	_inv(subT2, aux);
 	_m_prod(subT1, aux, _T);
 	_inv(_T, _iT);
-	for(int i=0;i<3;i++)
-	{for(int j=0;j<3;j++)
-		{
-			emit debug_send(QString("%lf  inside transformation",_T[i][j]);
-		}
-		emit debug_send(QString("\n");
-	}
-
+	qDebug() << "LMN3 = ["<<_LMN3[0] <<"," <<_LMN3[1] <<"," <<_LMN3[2]<<"]" ;
+	qDebug() << "lmn3 = ["<<_lmn3[0] <<"," <<_lmn3[1] <<"," <<_lmn3[2]<<"]" ;
+	qDebug() << "T1 = ["<<_T[0][0] <<"," <<_T[0][1] <<"," <<_T[0][2] <<"," <<_T[1][0] <<"," <<_T[1][1] <<"," <<_T[1][2] <<"," <<_T[2][0] <<"," <<_T[2][1] <<"," <<_T[2][2] <<"]" ;
+	//qDebug() << "iT = ["<<_iT[0][0] <<"," <<_iT[0][1] <<"," <<_iT[0][2] <<"," <<_iT[1][0] <<"," <<_iT[1][1] <<"," <<_iT[1][2] <<"," <<_iT[2][0] <<"," <<_iT[2][1] <<"," <<_iT[2][2] <<"]";
+	
 }
 
 /*
@@ -196,6 +233,9 @@ void Calibrate::getHCoords(double ar, double dec, double t, double *ac, double *
 	double EVC[3];
 	_setEVC(ar, dec, t, EVC);
 
+	if(!_isSetR3){
+		autoRef_3();
+	}
 
 	for(int i=0; i<3; i++)
 		HVC[i] = 0.0;
@@ -217,6 +257,10 @@ void Calibrate::getECoords(double ac, double alt, double t, double *ar, double *
 	double HVC[3];
 	double EVC[3];
 	_setHVC(ac, alt, HVC);
+
+	if(!_isSetR3){
+		autoRef_3();
+	}
 
 	for(int i=0; i<3; i++)
 		EVC[i] = 0.0;
