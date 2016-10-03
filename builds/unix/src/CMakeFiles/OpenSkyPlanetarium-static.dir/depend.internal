@@ -9,9 +9,12 @@ src/CMakeFiles/OpenSkyPlanetarium-static.dir/Calibrate.cpp.o
  /home/fossee/Qtlat/5.7/gcc_64/include/QtCore/QException
  /home/fossee/Qtlat/5.7/gcc_64/include/QtCore/QFile
  /home/fossee/Qtlat/5.7/gcc_64/include/QtCore/QList
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtCore/QObject
  /home/fossee/Qtlat/5.7/gcc_64/include/QtCore/QRegExp
  /home/fossee/Qtlat/5.7/gcc_64/include/QtCore/QSharedDataPointer
  /home/fossee/Qtlat/5.7/gcc_64/include/QtCore/QString
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtCore/QTextStream
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtCore/QTime
  /home/fossee/Qtlat/5.7/gcc_64/include/QtCore/QUrl
  /home/fossee/Qtlat/5.7/gcc_64/include/QtCore/QVariant
  /home/fossee/Qtlat/5.7/gcc_64/include/QtCore/qabstractitemmodel.h

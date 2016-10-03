@@ -166,19 +166,15 @@ pos_received():
 	The coordinates are then used for setting the references in transformation matrix
 */
 void OSPMainDialog :: pos_received(QString x,QString y){
-	//qDebug() << "[OpenSkyPlanetarium_telescopic]:"<<x <<","<<y<<endl;
-	qDebug() << "Printing X and Y = ["<<x <<","<<y<<"]";
+	qDebug() << "[OpenSkyPlanetarium]:"<<x <<","<<y<<endl;
 	double ac = x.toDouble();
 	double alt = y.toDouble();
-	qDebug() << "tel = ["<<ac <<","<<alt<<"]";
 	switch(nRef){
 		case 1:
 			calib.setRef_1(osp_ra,osp_dec,osp_time,ac,alt);
 			break;
 		case 2:
 			calib.setRef_2(osp_ra,osp_dec,osp_time,ac,alt);
-			ui->goTo->setEnabled(true);
-			ui->execScript->setEnabled(true);
 			break;
 		case 3:
 			calib.setRef_3(osp_ra,osp_dec,osp_time,ac,alt);
@@ -220,7 +216,6 @@ void OSPMainDialog :: initDevice(){
 		QDateTime dt = QDateTime::currentDateTime();
 		double time = StelUtils::hmsToRad (dt.time().hour(), dt.time().minute(), dt.time().second());
 		calib.setTime(time);
-		qDebug() << "t0 =["<<time<<"] //Initial time";
 		device.init();
 		ui->setRef->setEnabled(true);
 		ui->goTo->setEnabled(false);
@@ -334,7 +329,6 @@ void OSPMainDialog :: setReference(){
 		osp_ra=ra;
 		osp_dec=dec;
 		osp_time=time;
-		qDebug() << "Star = ["<<osp_time <<"," <<osp_ra <<"," <<osp_dec<<"]";
 		device.getPos();
 		sRef.setNum(nRef);
 		ui->refStat->setText(sRef+"/3");
@@ -360,9 +354,7 @@ void OSPMainDialog :: goTo(){
 	if (!selected.isEmpty()) {
 		StelUtils::rectToSphe(&ra,&dec,selected[0]->getEquinoxEquatorialPos(StelApp::getInstance().getCore()));
 	}
-	qDebug() << "[goto_star_ra,dec,time]:"<<ra <<"," <<dec <<"," <<time;
 	calib.getHCoords(ra,dec,time,&ac,&alt);
-	qDebug() << "altac = ["<<alt <<"," <<ac<<"]";
 	salt.setNum(alt);			//for testing purpose
 	sac.setNum(ac);				//for testing purpose
 	sora.setNum(ra);			//for testing purpose
@@ -372,7 +364,6 @@ void OSPMainDialog :: goTo(){
 	sndec.setNum(dec);			//for testing purpose
 	showMessage(QString("Old ra/dec = %1/%2 ; New ra/dec = %3/%4 ; Telescope Coordinates = %5/%6").arg(sora).arg(sodec).arg(snra).arg(sndec).arg(sac).arg(salt));				//for testing purpose
 	device.move(ac,alt);
-	qDebug() << "[goto_telescope_ac,alt]:"<<ac <<"," <<alt;
 }
 
 
@@ -534,7 +525,6 @@ move(QString,QString):
 	It takes ra/dec of star as its parameters and converts them to move
 */
 void OSPMainDialog :: move(QString x,QString y){
-	qDebug() << "Moveto X and Y = ["<<x <<","<<y<<"]";
 	double ra,dec,ac,alt;	
 	ra=x.toDouble();
 	dec=y.toDouble();
@@ -582,11 +572,13 @@ playAudio(QString):
 	THis is used to give play Audio functionality in our script
 */
 void OSPMainDialog :: playAudio(QString fname){
-		qDebug()<<"Here it is";
-	StelAudioMgr adm;
+	//TODO - Not Working Dependency Problem...Need to find other way to play sound
+
+
+	/*StelAudioMgr adm;
 	QString id("1");
 	adm.loadSound(QString(audioDirectoryPath+QString("/")+fname),id);
-	adm.playSound(id);
+	adm.playSound(id);*/
 }
 
 

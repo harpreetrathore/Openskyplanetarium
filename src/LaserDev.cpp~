@@ -120,7 +120,7 @@ void LaserDev::sread(const QString &s){
 		}
 		comm=QString("m_%1_%2").arg(ac).arg(alt);
 		thread.sendRequest(osp_serialPort,2000,QString(comm));
-		emit debug_send(comm);
+		emit debug_send(comm); 
 		}
 	else if(exp.exactMatch(recvd)){
 		QStringList items = exp.capturedTexts();

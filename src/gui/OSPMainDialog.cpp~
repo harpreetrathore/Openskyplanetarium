@@ -362,7 +362,6 @@ void OSPMainDialog :: goTo(){
 	}
 	qDebug() << "[goto_star_ra,dec,time]:"<<ra <<"," <<dec <<"," <<time;
 	calib.getHCoords(ra,dec,time,&ac,&alt);
-	qDebug() << "altac = ["<<alt <<"," <<ac<<"]";
 	salt.setNum(alt);			//for testing purpose
 	sac.setNum(ac);				//for testing purpose
 	sora.setNum(ra);			//for testing purpose
