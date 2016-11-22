@@ -248,7 +248,7 @@ void Calibrate::getHCoords(double ar, double dec, double t, double *ac, double *
 	qDebug() << "clmnforgoto=["<<HVC[0] <<"," <<HVC[1] <<"," <<HVC[2]<<"]";
 
 	(*ac) = atan2(HVC[1], HVC[0]);
-	(*alt) = asin(HVC[2]);
+	(*alt) = atan2(HVC[2]*sin(*ac),HVC[1]);
 }
 
 /*

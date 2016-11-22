@@ -307,6 +307,9 @@
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
              <widget class="QPushButton" name="selectDev">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
               <property name="text">
                <string>Select</string>
               </property>
@@ -378,108 +381,130 @@
       <attribute name="title">
        <string>ScriptEngine</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QPushButton" name="gt">
-           <property name="text">
-            <string>Goto</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pl">
-           <property name="text">
-            <string>PLAY</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="wt">
-           <property name="text">
-            <string>WAIT</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="lo">
-           <property name="text">
-            <string>LASER ON/OFF</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <widget class="QTextEdit" name="scriptEdit">
-           <property name="autoFillBackground">
-            <bool>true</bool>
-           </property>
-           <property name="inputMethodHints">
-            <set>Qt::ImhLowercaseOnly|Qt::ImhMultiLine|Qt::ImhNoAutoUppercase</set>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="readOnly">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="openScript">
-             <property name="text">
-              <string>Open</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="saveScript">
-             <property name="text">
-              <string>Save</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="compScript">
-             <property name="text">
-              <string>Build</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="execScript">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="text">
-              <string>Build + Run</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-      </layout>
+      <widget class="QSplitter" name="splitter">
+       <property name="geometry">
+        <rect>
+         <x>341</x>
+         <y>41</y>
+         <width>101</width>
+         <height>291</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <widget class="QSlider" name="volumeChanged">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="value">
+         <number>50</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="playui">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Play</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="stopui">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>Stop</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="openScript">
+        <property name="text">
+         <string>Open</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="saveScript">
+        <property name="text">
+         <string>Save</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="compScript">
+        <property name="text">
+         <string>Build</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="execScript">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>Build + Run</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QSplitter" name="splitter_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>431</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <widget class="QPushButton" name="gt">
+        <property name="text">
+         <string>Goto</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pl">
+        <property name="text">
+         <string>Audio</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="wt">
+        <property name="text">
+         <string>WAIT</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="lo">
+        <property name="text">
+         <string>LASER ON/OFF</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QTextEdit" name="scriptEdit">
+       <property name="geometry">
+        <rect>
+         <x>13</x>
+         <y>42</y>
+         <width>321</width>
+         <height>291</height>
+        </rect>
+       </property>
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
+       <property name="inputMethodHints">
+        <set>Qt::ImhLowercaseOnly|Qt::ImhMultiLine|Qt::ImhNoAutoUppercase</set>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="readOnly">
+        <bool>false</bool>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="abtTab">
       <attribute name="title">
@@ -500,7 +525,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Contact: IIT Bombay&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Email: redcoder265@gmail.com&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Email: openskyplanetarium@fossee.in&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>

@@ -73,6 +73,10 @@ QList
 -
 QHash
 -
+QMediaPlaylist
+-
+QAbstractSlider
+-
 
 /home/fossee/Qtlat/5.7/gcc_64/include/QtCore/QByteArray
 qbytearray.h
@@ -1414,12 +1418,20 @@ QtCore/qglobal.h
 qmediaplayer.h
 /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaplayer.h
 
+/home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/QMediaPlaylist
+qmediaplaylist.h
+/home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaplaylist.h
+
 /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qaudio.h
 QtMultimedia/qtmultimediadefs.h
 -
 QtMultimedia/qmultimedia.h
 -
 QtCore/qmetatype.h
+-
+
+/home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediabindableinterface.h
+QtMultimedia/qmediaobject.h
 -
 
 /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediacontent.h
@@ -1458,6 +1470,18 @@ QtMultimedia/qmediaenumdebug.h
 QtMultimedia/qaudio.h
 -
 QtNetwork/qnetworkconfiguration.h
+-
+
+/home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaplaylist.h
+QtCore/qobject.h
+-
+QtMultimedia/qmediacontent.h
+-
+QtMultimedia/qmediaobject.h
+-
+QtMultimedia/qmediabindableinterface.h
+-
+QtMultimedia/qmediaenumdebug.h
 -
 
 /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaresource.h
@@ -1533,6 +1557,10 @@ QtCore/qscopedpointer.h
 -
 QtSerialPort/qserialportglobal.h
 -
+
+/home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QAbstractSlider
+qabstractslider.h
+/home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qabstractslider.h
 
 /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QAction
 qaction.h
@@ -1614,9 +1642,17 @@ qpushbutton.h
 qradiobutton.h
 /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qradiobutton.h
 
+/home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QSlider
+qslider.h
+/home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qslider.h
+
 /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QSpacerItem
 qlayoutitem.h
 /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qlayoutitem.h
+
+/home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QSplitter
+qsplitter.h
+/home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qsplitter.h
 
 /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QTabWidget
 qtabwidget.h
@@ -1880,6 +1916,12 @@ QtCore/qobject.h
 
 /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qslider.h
 QtWidgets/qabstractslider.h
+-
+
+/home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qsplitter.h
+QtWidgets/qframe.h
+-
+QtWidgets/qsizepolicy.h
 -
 
 /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qstyle.h
@@ -2261,6 +2303,10 @@ QList
 -
 QHash
 -
+QMediaPlaylist
+-
+QAbstractSlider
+-
 
 /home/fossee/stellarium/src/core/OctahedronPolygon.hpp
 StelVertexArray.hpp
@@ -2583,7 +2629,11 @@ QtWidgets/QPushButton
 -
 QtWidgets/QRadioButton
 -
+QtWidgets/QSlider
+-
 QtWidgets/QSpacerItem
+-
+QtWidgets/QSplitter
 -
 QtWidgets/QTabWidget
 -

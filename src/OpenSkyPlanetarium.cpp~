@@ -36,12 +36,14 @@
  after loading the dynamic library
 *************************************************************************/
 StelModule* OpenSkyPlanetariumPluginInterface::getStelModule() const
-{
+{	
 	return new OpenSkyPlanetarium();
 }
 
 StelPluginInfo OpenSkyPlanetariumPluginInterface::getPluginInfo() const
 {
+
+	qDebug() << "[OpenSkyPlanetarium] __debug__ getplugininfo";
 	Q_INIT_RESOURCE(OpenSkyPlanetarium);
 	StelPluginInfo info;
 	info.id = "OpenSkyPlanetarium";
@@ -113,6 +115,7 @@ void OpenSkyPlanetarium::init()
 		qWarning() << "[OpemSkyPlanetarium] init() error: " << e.what();
 		return;
 	}
+	qDebug() << "init called for OpenSkyPlanetarium end";
 }
 
 /*************************************************************************

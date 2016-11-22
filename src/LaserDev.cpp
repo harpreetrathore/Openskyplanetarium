@@ -119,7 +119,7 @@ void LaserDev::sread(const QString &s){
 			alt = QString("+"+alt);
 		}
 		comm=QString("m_%1_%2").arg(ac).arg(alt);
-		thread.sendRequest(osp_serialPort,2000,QString(comm));
+		thread.sendRequest(osp_serialPort,1000,QString(comm));
 		emit debug_send(comm);
 		}
 	else if(exp.exactMatch(recvd)){
@@ -181,7 +181,7 @@ void LaserDev :: movy(int signDir){
 		comm=QString("movu");
 	else
 		comm=QString("movd");
-	thread.sendRequest(osp_serialPort,500,QString(comm));
+	thread.sendRequest(osp_serialPort,1000,QString(comm));
 			
 }
 
@@ -195,7 +195,7 @@ void LaserDev :: movx(int signDir){
 		comm=QString("movr");
 	else
 		comm=QString("movl");
-	thread.sendRequest(osp_serialPort,500,QString(comm));
+	thread.sendRequest(osp_serialPort,1000,QString(comm));
 }
 
 
@@ -205,7 +205,7 @@ stop():
 */
 void LaserDev :: stop(){
 	comm=QString("stop");
-	thread.sendRequest(osp_serialPort,500,QString(comm));
+	thread.sendRequest(osp_serialPort,1000,QString(comm));
 }
 
 

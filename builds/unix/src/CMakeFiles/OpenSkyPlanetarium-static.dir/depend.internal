@@ -416,11 +416,14 @@ src/CMakeFiles/OpenSkyPlanetarium-static.dir/OpenSkyPlanetarium-static_automoc.c
  /home/fossee/Qtlat/5.7/gcc_64/include/QtGui/qwindowdefs.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtGui/qwindowdefs_win.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/QMediaPlayer
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/QMediaPlaylist
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qaudio.h
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediabindableinterface.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediacontent.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaenumdebug.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaobject.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaplayer.h
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaplaylist.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaresource.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmultimedia.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qtmultimediadefs.h
@@ -431,9 +434,11 @@ src/CMakeFiles/OpenSkyPlanetarium-static.dir/OpenSkyPlanetarium-static_automoc.c
  /home/fossee/Qtlat/5.7/gcc_64/include/QtSerialPort/qserialport.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtSerialPort/qserialportglobal.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtSerialPort/qserialportinfo.h
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QAbstractSlider
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QGraphicsTextItem
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QProgressBar
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QWidget
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qabstractslider.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qframe.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qgraphicsitem.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qprogressbar.h
@@ -612,11 +617,14 @@ src/CMakeFiles/OpenSkyPlanetarium-static.dir/OpenSkyPlanetarium.cpp.o
  /home/fossee/Qtlat/5.7/gcc_64/include/QtGui/qwindowdefs.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtGui/qwindowdefs_win.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/QMediaPlayer
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/QMediaPlaylist
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qaudio.h
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediabindableinterface.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediacontent.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaenumdebug.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaobject.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaplayer.h
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaplaylist.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaresource.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmultimedia.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qtmultimediadefs.h
@@ -627,12 +635,14 @@ src/CMakeFiles/OpenSkyPlanetarium-static.dir/OpenSkyPlanetarium.cpp.o
  /home/fossee/Qtlat/5.7/gcc_64/include/QtSerialPort/qserialport.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtSerialPort/qserialportglobal.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtSerialPort/qserialportinfo.h
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QAbstractSlider
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QAction
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QGraphicsPixmapItem
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QGraphicsTextItem
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QGraphicsWidget
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QProgressBar
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QWidget
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qabstractslider.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qaction.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qactiongroup.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qframe.h
@@ -900,11 +910,14 @@ src/CMakeFiles/OpenSkyPlanetarium-static.dir/gui/OSPMainDialog.cpp.o
  /home/fossee/Qtlat/5.7/gcc_64/include/QtGui/qwindowdefs.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtGui/qwindowdefs_win.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/QMediaPlayer
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/QMediaPlaylist
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qaudio.h
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediabindableinterface.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediacontent.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaenumdebug.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaobject.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaplayer.h
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaplaylist.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmediaresource.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qmultimedia.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia/qtmultimediadefs.h
@@ -915,6 +928,7 @@ src/CMakeFiles/OpenSkyPlanetarium-static.dir/gui/OSPMainDialog.cpp.o
  /home/fossee/Qtlat/5.7/gcc_64/include/QtSerialPort/qserialport.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtSerialPort/qserialportglobal.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtSerialPort/qserialportinfo.h
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QAbstractSlider
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QAction
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QApplication
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QButtonGroup
@@ -933,7 +947,9 @@ src/CMakeFiles/OpenSkyPlanetarium-static.dir/gui/OSPMainDialog.cpp.o
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QProgressBar
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QPushButton
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QRadioButton
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QSlider
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QSpacerItem
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QSplitter
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QTabWidget
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QTextBrowser
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/QTextEdit
@@ -971,6 +987,7 @@ src/CMakeFiles/OpenSkyPlanetarium-static.dir/gui/OSPMainDialog.cpp.o
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qrubberband.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qsizepolicy.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qslider.h
+ /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qsplitter.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qstyle.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qstyleoption.h
  /home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets/qtabbar.h
