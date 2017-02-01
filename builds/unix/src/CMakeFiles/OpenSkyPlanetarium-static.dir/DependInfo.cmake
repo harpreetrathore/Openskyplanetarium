@@ -41,13 +41,13 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/home/fossee/stellarium/src/scripting"
   "src"
   "../../src/."
-  "/home/fossee/Qtlat/5.7/gcc_64/include"
-  "/home/fossee/Qtlat/5.7/gcc_64/include/QtCore"
-  "/home/fossee/Qtlat/5.7/gcc_64/./mkspecs/linux-g++"
-  "/home/fossee/Qtlat/5.7/gcc_64/include/QtGui"
-  "/home/fossee/Qtlat/5.7/gcc_64/include/QtWidgets"
-  "/home/fossee/Qtlat/5.7/gcc_64/include/QtMultimedia"
-  "/home/fossee/Qtlat/5.7/gcc_64/include/QtNetwork"
+  "/home/fossee/Qt5/5.5/gcc_64/include"
+  "/home/fossee/Qt5/5.5/gcc_64/include/QtCore"
+  "/home/fossee/Qt5/5.5/gcc_64/./mkspecs/linux-g++"
+  "/home/fossee/Qt5/5.5/gcc_64/include/QtGui"
+  "/home/fossee/Qt5/5.5/gcc_64/include/QtWidgets"
+  "/home/fossee/Qt5/5.5/gcc_64/include/QtMultimedia"
+  "/home/fossee/Qt5/5.5/gcc_64/include/QtNetwork"
   )
 
 # Targets to which this target links.

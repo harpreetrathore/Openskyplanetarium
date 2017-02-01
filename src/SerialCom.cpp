@@ -21,11 +21,17 @@
 
 QT_USE_NAMESPACE
 
+/**
+Constructor:
+*/
 SerialCom::SerialCom(QObject *parent)
     : QThread(parent), waitTime(0), quit(false)
 {
 }
 
+/**
+Destructor:
+*/
 SerialCom::~SerialCom()
 {
     mutex.lock();
@@ -35,6 +41,10 @@ SerialCom::~SerialCom()
     wait();
 }
 
+/**
+sendRequest(const QString, int, const QString):
+	Send a request to arduino
+*/
 void SerialCom::sendRequest(const QString &port, int waitTime, const QString &request)
 {
     QMutexLocker locker(&mutex);
@@ -47,6 +57,10 @@ void SerialCom::sendRequest(const QString &port, int waitTime, const QString &re
         cond.wakeOne();
 }
 
+/**
+run()
+	
+*/
 void SerialCom::run()
 {
     bool myPortNameChanged = false;

@@ -36,12 +36,14 @@
  after loading the dynamic library
 *************************************************************************/
 StelModule* OpenSkyPlanetariumPluginInterface::getStelModule() const
-{
+{	
 	return new OpenSkyPlanetarium();
 }
 
 StelPluginInfo OpenSkyPlanetariumPluginInterface::getPluginInfo() const
 {
+
+	qDebug() << "[OpenSkyPlanetarium] __debug__ getplugininfo";
 	Q_INIT_RESOURCE(OpenSkyPlanetarium);
 	StelPluginInfo info;
 	info.id = "OpenSkyPlanetarium";
@@ -91,7 +93,6 @@ bool OpenSkyPlanetarium::configureGui(bool show)
 *************************************************************************/
 void OpenSkyPlanetarium::init()
 {
-	qDebug() << "init called for OpenSkyPlanetarium";
     try{
 
         addAction("actionShow_Main_Dialog", N_("OpenSkyPlanetarium"), N_("Show Open Sky Planetarium Window"), mainDialog, "visible", "Ctrl+Shift+P");

@@ -64,6 +64,15 @@ OSPMainDialog::OSPMainDialog()
 	if(!StelFileMgr::exists(audioDirectoryPath)){
 		StelFileMgr::mkDir(audioDirectoryPath);
 	}
+
+	// Objects Initialization
+    player = new QMediaPlayer();
+    playlist = new QMediaPlaylist();
+    volumeSlider = new QAbstractSlider();
+    player->setPlaylist(playlist);
+    player->setVolume(50);
+    playerState = QMediaPlayer::StoppedState;
+	remtim = 0;
 }
 
 OSPMainDialog::~OSPMainDialog()
@@ -88,7 +97,6 @@ void OSPMainDialog::createDialogContent()
 	connect(&StelApp::getInstance(), SIGNAL(languageChanged()), this, SLOT(retranslate()));
 	connect(ui->closeStelWindow, SIGNAL(clicked()), this, SLOT(close()));
 }
-
 
 /*
 setSignals():
@@ -140,15 +148,23 @@ void OSPMainDialog :: setSignals(){
 	connect(this,SIGNAL(comTURN(bool)),this,SLOT(laser(bool)));
 	connect(this,SIGNAL(comPLAY(QString)),this,SLOT(playAudio(QString)));
 	connect(this,SIGNAL(comWAIT(int,int)),this,SLOT(waitforsec(int,int)));
+	
+	//Signals for audio 
+    connect(ui->playui,SIGNAL(clicked()),this,SLOT(playClicked()));
+    connect(ui->stopui,SIGNAL(clicked()),this,SLOT(stopClick()));
+    connect(ui->volumeChanged,SIGNAL(sliderMoved(int)),this,SLOT(setVolume(int)));
+    connect(this,SIGNAL(play()),player,SLOT(play()));
+    connect(this,SIGNAL(pause()),player,SLOT(pause()));
+    connect(this,SIGNAL(stop()),player,SLOT(stop()));
 }
 
 
 /*
-//////////////////////////////////////////////////////////User Defined Functions and Slots/////////////////////////////////////////////////////////////
-					All the required functions and slots for the gui written below
+/////////////////////////////////////User Defined Functions and Slots//////////////////////////////////////
+			All the required functions and slots for the gui written below
 */
 
-//////////////////////////////////////////////////////////Programmer helper slots///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////Programmer helper slots////////////////////////////////////////////
 
 /*
 debug_received():
@@ -158,19 +174,15 @@ void OSPMainDialog :: debug_received(QString s){
 	qDebug() << "[OpenSkyPlanetarium] __debug__"<<s;
 }
 
-
-
 /*
 pos_received():
 	This slot is called when the laser device sends us the coordinates
 	The coordinates are then used for setting the references in transformation matrix
 */
 void OSPMainDialog :: pos_received(QString x,QString y){
-	//qDebug() << "[OpenSkyPlanetarium_telescopic]:"<<x <<","<<y<<endl;
 	qDebug() << "Printing X and Y = ["<<x <<","<<y<<"]";
 	double ac = x.toDouble();
 	double alt = y.toDouble();
-	qDebug() << "tel = ["<<ac <<","<<alt<<"]";
 	switch(nRef){
 		case 1:
 			calib.setRef_1(osp_ra,osp_dec,osp_time,ac,alt);
@@ -189,26 +201,18 @@ void OSPMainDialog :: pos_received(QString x,QString y){
 	}
 }
 
-
-
-
 /*
 showMessage(QString):
 	this function is called to display error/information messages
 */
 void OSPMainDialog :: showMessage(QString m){
 	QMessageBox msgBox;
-        msgBox.setWindowTitle("OpenSkyPlanetarium");
+    msgBox.setWindowTitle("OpenSkyPlanetarium");
 	msgBox.setText(m);
 	msgBox.exec();
 }
 
-
-
-
 //////////////////////////////////////////DEvice RElated slots////////////////////////////////////////////////////////////////////////////
-
-
 
 /*
 initDevice():
@@ -228,7 +232,6 @@ void OSPMainDialog :: initDevice(){
 		ui->refStat->setText("0/3");
 }
 
-
 /*
 selectDevice():
 	this slot is connected to the selectDev button of the gui
@@ -239,10 +242,8 @@ void OSPMainDialog :: selectDevice(){
 	nRef=0;
 	QStringList itemsList;		
 	bool ok;
-	const auto infos = QSerialPortInfo::availablePorts();
-	for (const QSerialPortInfo &info : infos){
-        	itemsList.append(info.portName());
-	}
+	foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
+        itemsList.append(info.portName());
     	portName = QInputDialog::getItem(NULL, "Open Sky Planetarium","Select Device:",itemsList, 0, false, &ok);
 	device.setPortName(portName);
     	if (ok && !portName.isEmpty()){
@@ -264,10 +265,6 @@ void OSPMainDialog :: selectDevice(){
 	}
 }
 
-
-
-
-
 /*
 arrow_released():
 	this function is called when the Up(mvUp), Down(mvDown), Right(mvRight) and Left(mvLeft) button is released
@@ -276,7 +273,6 @@ arrow_released():
 void OSPMainDialog :: arrow_released(){
 		device.stop();
 }
-
 
 /*
 upPressed(), downPressed(), rightPressed(), leftPressed():
@@ -316,7 +312,7 @@ void OSPMainDialog :: laserToggled(){
 }
 
 
-/////////////////////////////////////////////////Calibration Related SLots/////////////////////////////////////////////////////////////////////////
+///////////////////////////////////Calibration Related SLots/////////////////////////////////////////////////////////////////////////
 /*
 setReference():
 	this function sets three references for the matrix transformation
@@ -331,7 +327,7 @@ void OSPMainDialog :: setReference(){
 	const QList<StelObjectP>& selected = GETSTELMODULE(StelObjectMgr)->getSelectedObject();
 	if (!selected.isEmpty()) {
 		StelUtils::rectToSphe(&ra,&dec,selected[0]->getEquinoxEquatorialPos(StelApp::getInstance().getCore()));
-		osp_ra=ra;
+		osp_ra=3.14159 - ra;
 		osp_dec=dec;
 		osp_time=time;
 		qDebug() << "Star = ["<<osp_time <<"," <<osp_ra <<"," <<osp_dec<<"]";
@@ -343,8 +339,6 @@ void OSPMainDialog :: setReference(){
 		showMessage("Please select a star to set as a Reference");
 	}
 }
-
-
 
 /*
 goTo():
@@ -374,9 +368,6 @@ void OSPMainDialog :: goTo(){
 	qDebug() << "[goto_telescope_ac,alt]:"<<ac <<"," <<alt;
 }
 
-
-
-
 /*
 openScript():
 	This function opens an existing file if present in the script directory of our module
@@ -394,7 +385,6 @@ void OSPMainDialog :: openScript(){
 	}
 
 }
-
 
 /*
 saveScript():
@@ -418,15 +408,16 @@ void OSPMainDialog :: saveScript(){
 
 /*
 execScript():
-	THis function is used to execute our script
+	This function is used to execute script
 	This function calls compile function before executing
 */
 void OSPMainDialog :: execScript(){
 	compileScript();
 	if(buildStatus){
-		for(QString commands : commandsList){
-			QStringList com = commands.split("-");
+		foreach(QString commands, commandsList){
+			QStringList com = commands.split("_");
 			if(com[0].compare("goto")==0){
+				qDebug()<<com;
 				emit comGOTO(com[1],com[2]);
 			}
 			else if(com[0].compare("wait")==0){
@@ -455,77 +446,88 @@ compileScript():
 */
 void OSPMainDialog :: compileScript(){
 	QRegExp scriptExp("^([goto | wait | turn | play]{4})\\s*([\u0370-\u03FF0-9a-zA-Z\\.\\s]*)\\s*;$");
-	bool compileStatus = true;
+	bool compileStatus = true,i;
 	int line_count=0;
 	commandsList.clear();
-	for(QString w : ui->scriptEdit->toPlainText().split("\n")){
-		line_count++;
-		if(!scriptExp.exactMatch(w) && w.compare("")!=0){
-			compileStatus=false;
-			showMessage(QString("Syntax Error at line %1").arg(line_count));
-		}
-		else{
-			QStringList com_par=scriptExp.capturedTexts();
-				if(com_par[1].compare("goto")==0){
-					double ra=0.0,dec=0.0;
-					QString sra,sdec;
-					//Todo:add checks before going down
-					StelObjectP star = GETSTELMODULE(StelObjectMgr)->searchByNameI18n(com_par[2].trimmed());
-					if(!star.isNull()){
-						StelUtils::rectToSphe(&ra,&dec,star->getEquinoxEquatorialPos(StelApp::getInstance().getCore()));
-						sra.setNum(ra);
-						sdec.setNum(dec);
-						commandsList << QString("goto_"+sra+"_"+sdec);
+	i = playlist->clear();
+
+	if(nRef<2)
+	{
+		compileStatus=false;
+		showMessage(QString("Please do the calibration"));	
+	}
+	else{
+
+		foreach(QString w, ui->scriptEdit->toPlainText().split("\n")){
+			line_count++;
+			if(!scriptExp.exactMatch(w) && w.compare("")!=0){
+				compileStatus=false;
+				showMessage(QString("Syntax Error at line %1").arg(line_count));
+			}
+			else{
+				QStringList com_par=scriptExp.capturedTexts();
+					if(com_par[1].compare("goto")==0){
+						double ra=0.0,dec=0.0;
+						QString sra,sdec;
+						//Todo:add checks before going down
+						StelObjectP star = GETSTELMODULE(StelObjectMgr)->searchByNameI18n(com_par[2].trimmed());
+						if(!star.isNull()){
+	 						StelUtils::rectToSphe(&ra,&dec,star->getEquinoxEquatorialPos(StelApp::getInstance().getCore()));
+							sra.setNum(ra);
+							sdec.setNum(dec);
+							commandsList << QString("goto_"+sra+"_"+sdec);
+							qDebug()<<sra<<sdec;
+						}
+						else{
+							showMessage("Could not find the star with the given name");
+						}
 					}
-					else{
-						showMessage("Could not find the star with the given name");
+					else if(com_par[1].compare("turn")==0){
+						if(com_par[2].trimmed().compare("on")!=0 && com_par[2].trimmed().compare("off")!=0){
+							compileStatus=false;
+							showMessage(QString("The parameter for laser must be either 'on' or 'off' at line %1").arg(line_count));
+							break;
+						}
+						else{
+							commandsList << QString("turn_"+com_par[2].trimmed());
+						}
 					}
-				}
-				else if(com_par[1].compare("turn")==0){
-					if(com_par[2].trimmed().compare("on")!=0 && com_par[2].trimmed().compare("off")!=0){
-						compileStatus=false;
-						showMessage(QString("The parameter for lasr must be either 'on' or 'off' at line %1").arg(line_count));
-						break;
+					else if(com_par[1].compare("play")==0){
+						QFile f(QString(audioDirectoryPath+"/"+com_par[2].trimmed()));
+						if(!f.exists()){
+							compileStatus=false;
+							showMessage(QString("File not found in [{Stellarium User Directory}/modules/OpenSkyPlanetarium/audio/] at line %1").arg(line_count));
+							break;
+						}
+						else{
+							commandsList << QString("play_"+com_par[2].trimmed());
+						}
 					}
-					else{
-						commandsList << QString("turn-"+com_par[2].trimmed());
+					else if(com_par[1].compare("wait")==0){
+						QRegExp a("([1-5]?[0-9])\\s*m\\s*([1-5]?[0-9])\\s*s");
+						if(!a.exactMatch(com_par[2].trimmed())){
+							showMessage(QString("(X)m(Y)s format expected as argument for wait at line %1").arg(line_count));
+							compileStatus=false;
+							break;
+						}
+						else{
+							QStringList temp = a.capturedTexts();
+							commandsList << QString("wait_"+temp[1].trimmed()+"_"+temp[2].trimmed());
+						}
 					}
-				}
-				else if(com_par[1].compare("play")==0){
-					QFile f(QString(audioDirectoryPath+"/"+com_par[2].trimmed()));
-					if(!f.exists()){
-						compileStatus=false;
-						showMessage(QString("File not found in [{Stellarium User Directory}/modules/OpenSkyPlanetarium/audio/] at line %1").arg(line_count));
-						break;
-					}
-					else{
-						commandsList << QString("play-"+com_par[2].trimmed());
-					}
-				}
-				else if(com_par[1].compare("wait")==0){
-					QRegExp a("([1-5]?[0-9])\\s*m\\s*([1-5]?[0-9])\\s*s");
-					if(!a.exactMatch(com_par[2].trimmed())){
-						showMessage(QString("(X)m(Y)s format expected as argument for wait at line %1").arg(line_count));
-						compileStatus=false;
-						break;
-					}
-					else{
-						QStringList temp = a.capturedTexts();
-						commandsList << QString("wait-"+temp[1].trimmed()+"-"+temp[2].trimmed());
-					}
-				}
+			}
 		}
 	}
 	if (!compileStatus){
 		commandsList.clear();
 	}
 	else{
-		showMessage("Build Successful");
+		//showMessage("Build Successful");
 	}
 	buildStatus=compileStatus;
 }
 
-///////////////////////////SLOTS FOR FUNCTIONS TO BE CALLED WHILE EXECUTION OF SCRIPT////////////////////////////////////////////////////////
+////////////////////////SLOTS FOR FUNCTIONS TO BE CALLED WHILE EXECUTION OF SCRIPT///////////////////////////////////////////
 
 /*
 move(QString,QString):
@@ -543,12 +545,10 @@ void OSPMainDialog :: move(QString x,QString y){
 	device.move(ac,alt);
 }
 
-
-
 /*
 laser(bool):
-	THis is a slot for our script engine emit signal comTURN
-	THis is used when playing the script
+	This is a slot for our script engine emit signal comTURN
+	This is used when playing the script
 */
 void OSPMainDialog :: laser(bool stat){
 	if(stat){
@@ -569,25 +569,27 @@ waitforsec(int,int):
 	this is used to give wait functionality in the script
 */
 void OSPMainDialog :: waitforsec(int min,int sec){
-	QTime dieTime = QTime::currentTime().addSecs(min*60 + sec);
-    	while( QTime::currentTime() < dieTime )
-    	{
-    	    QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
-    	}
+	dieTime = QTime::currentTime().addSecs(min*60 + sec);
+	qDebug()<<"Current Time"<<QTime::currentTime();
+	qDebug()<<"before While"<<dieTime;	
+	while( QTime::currentTime() < dieTime || playerState == QMediaPlayer::PausedState)
+	{		
+	   	QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+	}
+	qDebug()<<"remTim"<<remtim;
+	qDebug()<<"After while"<<dieTime;
 }
 /*
 playAudio(QString):
 	This function is used to play audio files
-	THis is used to give play Audio functionality in our script
+	This is used to give play Audio functionality in our script
 */
 void OSPMainDialog :: playAudio(QString fname){
-	//TODO - Not Working Dependency Problem...Need to find other way to play sound
-
-
-	/*StelAudioMgr adm;
-	QString id("1");
-	adm.loadSound(QString(audioDirectoryPath+QString("/")+fname),id);
-	adm.playSound(id);*/
+	playlist->addMedia(QUrl::fromLocalFile(QString(audioDirectoryPath+QString("/")+fname)));
+	emit play();
+    ui->playui->setEnabled(true);	
+    ui->playui->setText(QString("Pause"));
+    playerState = QMediaPlayer::PlayingState;
 }
 
 
@@ -614,13 +616,9 @@ void OSPMainDialog :: gt(){
 	}
 }
 
-
-
-
-
 /*
 pl():
-	THis slot is connected to Play Button of the Script Engine
+	This slot is connected to Play Button of the Script Engine
 	Adds the play audio command to your script
 */
 void OSPMainDialog :: pl(){
@@ -632,11 +630,7 @@ void OSPMainDialog :: pl(){
 	else{
 		showMessage("Please select the audio file");
 	}
-	//playAudio(fileName); //for testing purpose
 }
-
-
-
 
 /*
 lo():
@@ -656,10 +650,6 @@ void OSPMainDialog :: lo(){
 	}
 }
 
-
-
-
-
 /*
 wt():
 	This slot is connected to wait button of the Script Engine
@@ -675,5 +665,62 @@ void OSPMainDialog :: wt(){
 	else{
 		showMessage("Please enter time in (X)m(Y)s format");
 	}	
+}
+
+////////////////////// Media Functions /////////////////////////////
+
+/*
+setVolume(int):
+	This slot is connected to the volume slider of the Script Engine
+	Sets the volume for the player.
+*/
+
+void OSPMainDialog::setVolume(int volume)
+{
+    player->setVolume(volume);
+}
+
+/*
+stopClick():
+	This slot is connected to the stopui function of the Script Engine
+	Stops the player.
+*/
+
+void OSPMainDialog::stopClick()
+{
+    playerState = QMediaPlayer::StoppedState;
+    ui->playui->setText(QString("Play"));
+    player->stop();
+}
+
+/*
+playClicked():
+	This slot is connected to the playui function of the Script Engine	
+	Play or pause the audio in the script engine.
+*/
+
+void OSPMainDialog::playClicked()
+{
+    switch (playerState) {
+    case QMediaPlayer::StoppedState:
+		emit play();
+		emit execScript();
+        ui->playui->setText(QString("Pause"));
+        playerState = QMediaPlayer::PlayingState;
+        break;
+    case QMediaPlayer::PausedState:
+        emit play();
+        ui->playui->setText(QString("Pause"));
+		remtim = pauseWait.restart();
+        dieTime = dieTime.addMSecs(remtim);
+        playerState = QMediaPlayer::PlayingState;
+        break;
+    case QMediaPlayer::PlayingState:
+        emit pause();
+		pauseWait.start();
+        ui->playui->setText(QString("Play"));
+        playerState = QMediaPlayer::PausedState;
+        break;
+    }
 }
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'OSPMainDialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.7.0
+** Created by: Qt User Interface Compiler version 5.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -21,7 +21,9 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QSplitter>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QTextEdit>
@@ -70,20 +72,20 @@ public:
     QPushButton *setRef;
     QLineEdit *refStat;
     QWidget *scriptTab;
-    QVBoxLayout *verticalLayout_3;
-    QHBoxLayout *horizontalLayout;
-    QPushButton *gt;
-    QPushButton *pl;
-    QPushButton *wt;
-    QPushButton *lo;
-    QHBoxLayout *horizontalLayout_2;
-    QTextEdit *scriptEdit;
-    QVBoxLayout *verticalLayout_2;
-    QSpacerItem *verticalSpacer;
+    QSplitter *splitter;
+    QSlider *volumeChanged;
+    QPushButton *playui;
+    QPushButton *stopui;
     QPushButton *openScript;
     QPushButton *saveScript;
     QPushButton *compScript;
     QPushButton *execScript;
+    QSplitter *splitter_2;
+    QPushButton *gt;
+    QPushButton *pl;
+    QPushButton *wt;
+    QPushButton *lo;
+    QTextEdit *scriptEdit;
     QWidget *abtTab;
     QVBoxLayout *verticalLayout_4;
     QTextBrowser *textBrowser;
@@ -93,7 +95,6 @@ public:
     {
         if (OSPMainDialog->objectName().isEmpty())
             OSPMainDialog->setObjectName(QStringLiteral("OSPMainDialog"));
-        OSPMainDialog->setWindowModality(Qt::ApplicationModal);
         OSPMainDialog->resize(477, 415);
         OSPMainDialog->setFocusPolicy(Qt::ClickFocus);
         verticalLayout = new QVBoxLayout(OSPMainDialog);
@@ -235,6 +236,7 @@ public:
         verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
         selectDev = new QPushButton(configDevice);
         selectDev->setObjectName(QStringLiteral("selectDev"));
+        selectDev->setEnabled(true);
 
         verticalLayout_5->addWidget(selectDev);
 
@@ -280,77 +282,65 @@ public:
         tabWidg->addTab(calTab, QString());
         scriptTab = new QWidget();
         scriptTab->setObjectName(QStringLiteral("scriptTab"));
-        verticalLayout_3 = new QVBoxLayout(scriptTab);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        gt = new QPushButton(scriptTab);
+        splitter = new QSplitter(scriptTab);
+        splitter->setObjectName(QStringLiteral("splitter"));
+        splitter->setGeometry(QRect(341, 41, 101, 291));
+        splitter->setOrientation(Qt::Vertical);
+        volumeChanged = new QSlider(splitter);
+        volumeChanged->setObjectName(QStringLiteral("volumeChanged"));
+        volumeChanged->setEnabled(true);
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(volumeChanged->sizePolicy().hasHeightForWidth());
+        volumeChanged->setSizePolicy(sizePolicy1);
+        volumeChanged->setValue(50);
+        volumeChanged->setOrientation(Qt::Horizontal);
+        splitter->addWidget(volumeChanged);
+        playui = new QPushButton(splitter);
+        playui->setObjectName(QStringLiteral("playui"));
+        playui->setEnabled(false);
+        splitter->addWidget(playui);
+        stopui = new QPushButton(splitter);
+        stopui->setObjectName(QStringLiteral("stopui"));
+        stopui->setEnabled(true);
+        splitter->addWidget(stopui);
+        openScript = new QPushButton(splitter);
+        openScript->setObjectName(QStringLiteral("openScript"));
+        splitter->addWidget(openScript);
+        saveScript = new QPushButton(splitter);
+        saveScript->setObjectName(QStringLiteral("saveScript"));
+        splitter->addWidget(saveScript);
+        compScript = new QPushButton(splitter);
+        compScript->setObjectName(QStringLiteral("compScript"));
+        splitter->addWidget(compScript);
+        execScript = new QPushButton(splitter);
+        execScript->setObjectName(QStringLiteral("execScript"));
+        execScript->setEnabled(true);
+        splitter->addWidget(execScript);
+        splitter_2 = new QSplitter(scriptTab);
+        splitter_2->setObjectName(QStringLiteral("splitter_2"));
+        splitter_2->setGeometry(QRect(10, 10, 431, 23));
+        splitter_2->setOrientation(Qt::Horizontal);
+        gt = new QPushButton(splitter_2);
         gt->setObjectName(QStringLiteral("gt"));
-
-        horizontalLayout->addWidget(gt);
-
-        pl = new QPushButton(scriptTab);
+        splitter_2->addWidget(gt);
+        pl = new QPushButton(splitter_2);
         pl->setObjectName(QStringLiteral("pl"));
-
-        horizontalLayout->addWidget(pl);
-
-        wt = new QPushButton(scriptTab);
+        splitter_2->addWidget(pl);
+        wt = new QPushButton(splitter_2);
         wt->setObjectName(QStringLiteral("wt"));
-
-        horizontalLayout->addWidget(wt);
-
-        lo = new QPushButton(scriptTab);
+        splitter_2->addWidget(wt);
+        lo = new QPushButton(splitter_2);
         lo->setObjectName(QStringLiteral("lo"));
-
-        horizontalLayout->addWidget(lo);
-
-
-        verticalLayout_3->addLayout(horizontalLayout);
-
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        splitter_2->addWidget(lo);
         scriptEdit = new QTextEdit(scriptTab);
         scriptEdit->setObjectName(QStringLiteral("scriptEdit"));
+        scriptEdit->setGeometry(QRect(13, 42, 321, 291));
         scriptEdit->setAutoFillBackground(true);
         scriptEdit->setInputMethodHints(Qt::ImhLowercaseOnly|Qt::ImhMultiLine|Qt::ImhNoAutoUppercase);
         scriptEdit->setFrameShape(QFrame::StyledPanel);
         scriptEdit->setReadOnly(false);
-
-        horizontalLayout_2->addWidget(scriptEdit);
-
-        verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_2->addItem(verticalSpacer);
-
-        openScript = new QPushButton(scriptTab);
-        openScript->setObjectName(QStringLiteral("openScript"));
-
-        verticalLayout_2->addWidget(openScript);
-
-        saveScript = new QPushButton(scriptTab);
-        saveScript->setObjectName(QStringLiteral("saveScript"));
-
-        verticalLayout_2->addWidget(saveScript);
-
-        compScript = new QPushButton(scriptTab);
-        compScript->setObjectName(QStringLiteral("compScript"));
-
-        verticalLayout_2->addWidget(compScript);
-
-        execScript = new QPushButton(scriptTab);
-        execScript->setObjectName(QStringLiteral("execScript"));
-        execScript->setEnabled(true);
-
-        verticalLayout_2->addWidget(execScript);
-
-
-        horizontalLayout_2->addLayout(verticalLayout_2);
-
-
-        verticalLayout_3->addLayout(horizontalLayout_2);
-
         tabWidg->addTab(scriptTab, QString());
         abtTab = new QWidget();
         abtTab->setObjectName(QStringLiteral("abtTab"));
@@ -395,14 +385,16 @@ public:
         setRef->setText(QApplication::translate("OSPMainDialog", "Set Ref.", 0));
         refStat->setText(QApplication::translate("OSPMainDialog", "0/3", 0));
         tabWidg->setTabText(tabWidg->indexOf(calTab), QApplication::translate("OSPMainDialog", "Calibration", 0));
-        gt->setText(QApplication::translate("OSPMainDialog", "Goto", 0));
-        pl->setText(QApplication::translate("OSPMainDialog", "PLAY", 0));
-        wt->setText(QApplication::translate("OSPMainDialog", "WAIT", 0));
-        lo->setText(QApplication::translate("OSPMainDialog", "LASER ON/OFF", 0));
+        playui->setText(QApplication::translate("OSPMainDialog", "Play", 0));
+        stopui->setText(QApplication::translate("OSPMainDialog", "Stop", 0));
         openScript->setText(QApplication::translate("OSPMainDialog", "Open", 0));
         saveScript->setText(QApplication::translate("OSPMainDialog", "Save", 0));
         compScript->setText(QApplication::translate("OSPMainDialog", "Build", 0));
         execScript->setText(QApplication::translate("OSPMainDialog", "Build + Run", 0));
+        gt->setText(QApplication::translate("OSPMainDialog", "Goto", 0));
+        pl->setText(QApplication::translate("OSPMainDialog", "Audio", 0));
+        wt->setText(QApplication::translate("OSPMainDialog", "WAIT", 0));
+        lo->setText(QApplication::translate("OSPMainDialog", "LASER ON/OFF", 0));
         tabWidg->setTabText(tabWidg->indexOf(scriptTab), QApplication::translate("OSPMainDialog", "ScriptEngine", 0));
         textBrowser->setHtml(QApplication::translate("OSPMainDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -416,7 +408,7 @@ public:
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Contact: IIT Bombay</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Email: redcoder265@gmail.com</p></body></html>", 0));
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Email: openskyplanetarium@fossee.in</p></body></html>", 0));
         tabWidg->setTabText(tabWidg->indexOf(abtTab), QApplication::translate("OSPMainDialog", "About", 0));
     } // retranslateUi
 

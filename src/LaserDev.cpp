@@ -30,7 +30,7 @@
 #include "SerialCom.hpp"
 
 /*
-COnstructor:
+Constructor:
 */
 LaserDev::LaserDev(QObject *parent)
             :QObject(parent)
@@ -51,11 +51,10 @@ LaserDev::~LaserDev(){
 
 /*
 processError(const QString):
-	slot for the error , sends the signal to OSPMainDialog
+	slot for the error, sends the signal to OSPMainDialog
 */
 void LaserDev :: processError(const QString &s){
 }
-
 
 /*
 processTimeout(const QString):
@@ -66,7 +65,7 @@ void LaserDev :: processTimeout(const QString &s){
 
 
 /*
-setPortName(QString):
+setPortName(const QString):
 	function for setting the portName
 */
 void LaserDev :: setPortName(const QString &s){
@@ -74,9 +73,8 @@ void LaserDev :: setPortName(const QString &s){
 	thread.sendRequest(osp_serialPort,5000,QString(""));
 }
 
-
 /*
-sread(QString,int):
+sread(const QString):
 	this function is called after writing to the serial port
 	this function performs various steps like echoData,getSteps,getHorizontalCoords,getVerticalCoords
 */
@@ -112,8 +110,8 @@ void LaserDev::sread(const QString &s){
 		bool ac_neg=false,alt_neg=false;
 		if(dac<0) ac_neg=true;
 		if(dalt<0) alt_neg=true;
-		ac=QString::number(dac,'f',2);
-		alt=QString::number(dalt,'f',2);
+		ac=QString::number(dac,'f',4);
+		alt=QString::number(dalt,'f',4);
 		if(!ac_neg){
 			ac = QString("+"+ac);
 		}
@@ -121,19 +119,18 @@ void LaserDev::sread(const QString &s){
 			alt = QString("+"+alt);
 		}
 		comm=QString("m_%1_%2").arg(ac).arg(alt);
-		thread.sendRequest(osp_serialPort,2000,QString(comm));
-		emit debug_send(comm); 
+		thread.sendRequest(osp_serialPort,1000,QString(comm));
+		emit debug_send(comm);
 		}
 	else if(exp.exactMatch(recvd)){
 		QStringList items = exp.capturedTexts();
 		emit pos_received(items[1],items[2]);
 	}
 	else {
-		emit debug_send(QString("Unexpected Byte Received.Please Restart the device: %1 if problems persist").arg(recvd));
+		//emit debug_send(QString("Unexpected Byte Received.Please Restart the device: %1 if problems persist").arg(recvd));
 		//thread.sendRequest(osp_serialPort,1000,QString("clear"));
 	} 
 }
-
 
 /*
 init():
@@ -159,7 +156,7 @@ void LaserDev :: getPos(){
 
 
 /*
-move(QString,QString):
+move(double,double):
 	sends the telescope coordinates to the device
 */
 void LaserDev :: move(double x,double y){
@@ -174,33 +171,30 @@ void LaserDev :: move(double x,double y){
 	  
 }
 
-
 /*
-	movx(QString):
-	to move the laser in x direction depending on signDir
+movy(int):
+	to move the laser in y direction depending on signDir
 */
 void LaserDev :: movy(int signDir){
 	if(signDir)
 		comm=QString("movu");
 	else
 		comm=QString("movd");
-	thread.sendRequest(osp_serialPort,500,QString(comm));
+	thread.sendRequest(osp_serialPort,1000,QString(comm));
 			
 }
 
-
 /*
-movy(QString):
-	to move the laser in y direction depending on signDir
+	movx(int):
+	to move the laser in x direction depending on signDir
 */
 void LaserDev :: movx(int signDir){
 	if(signDir)
 		comm=QString("movr");
 	else
 		comm=QString("movl");
-	thread.sendRequest(osp_serialPort,500,QString(comm));
+	thread.sendRequest(osp_serialPort,1000,QString(comm));
 }
-
 
 /*
 stop():
@@ -208,9 +202,8 @@ stop():
 */
 void LaserDev :: stop(){
 	comm=QString("stop");
-	thread.sendRequest(osp_serialPort,500,QString(comm));
+	thread.sendRequest(osp_serialPort,1000,QString(comm));
 }
-
 
 /*
 laserOn():

@@ -21,21 +21,11 @@
 #include <QThread>
 #include <QMutex>
 #include <QWaitCondition>
+
+//! This class is used for funtions related to serial communication with the arduino
 class SerialCom : public QThread
 {
     Q_OBJECT
-
-public:
-    SerialCom(QObject *parent = 0);
-    ~SerialCom();
-
-    void sendRequest(const QString &port, int waitTime, const QString &request);
-    void run();
-
-signals:
-    void response(const QString &s);
-    void error(const QString &s);
-    void timeout(const QString &s);
 
 private:
     QString port;
@@ -44,6 +34,48 @@ private:
     QMutex mutex;
     QWaitCondition cond;
     bool quit;
+
+public:
+	/**
+	*	Class constructor
+	*/
+    SerialCom(QObject *parent = 0);
+
+	/**
+	*	Class destructor
+	*/
+    ~SerialCom();
+
+	/**
+	*	To set the parameters that needed to sent to arduino
+	*	\param port name of the port on which request need to be sent
+	*	\param waitTime wait time for the response from arduino
+	*	\param request a string to be sent to arduino
+	*/
+    void sendRequest(const QString &port, int waitTime, const QString &request);
+
+	/**
+	*	To send a request to arduino and wait for response and to save it
+	*/    
+	void run();
+
+signals:
+
+	/**
+	*	Response from the arduino
+	*/
+    void response(const QString &s);
+
+	/**
+	*	Error from arduino
+	*/
+    void error(const QString &s);
+
+	/**
+	*	Timeout error from arduio
+	*/
+    void timeout(const QString &s);
+
 };
 
 
